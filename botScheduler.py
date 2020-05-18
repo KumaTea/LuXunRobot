@@ -3,6 +3,7 @@ from botTweet import tweet, morning, night
 
 
 def start():
-    scheduler.add_job(tweet, 'cron', hour='8-23,0-2', minute='*/30')
+    scheduler.add_job(tweet, 'cron', hour='8-23,0-1', minute='*/30')
+    scheduler.add_job(tweet, 'cron', hour=2, minute=0)
     scheduler.add_job(morning, 'cron', hour=7, minute=30)
     scheduler.add_job(night, 'cron', hour=2, minute=30)
