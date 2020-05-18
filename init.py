@@ -11,6 +11,7 @@ for i in ['。', '？', '！', '……', '——', '；', '：']:
 
 luxun_split = " ".join(jieba.cut(luxun_text))
 luxun_split = luxun_split.replace('\n ', '\n')
+luxun_split = luxun_split.replace('\n　　 ', '\n')
 
 escape = ' ○＂＃＄％＆＇（）＊＋，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､　、〃〈〉《》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘’‛“”„‟…‧﹏﹑﹔·！？｡。'
 
