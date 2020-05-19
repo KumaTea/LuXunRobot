@@ -4,7 +4,7 @@ from botSession import lx, lx_model
 
 
 def tweet():
-    sen = gen_length(lx_model)
+    sen = gen_length(lx_model, 100, 140)
     result = lx.update_status(sen)
     print(f'Generated: {result.text}\n\n')
     return True
