@@ -1,3 +1,6 @@
+from botInfo import me
+
+
 images = {
     'blank': {
         '001': {'path': 'images/blank_001.jpg'},
@@ -14,3 +17,6 @@ images = {
         },
     }
 }
+
+
+blacklist = [me]

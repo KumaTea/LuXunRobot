@@ -1,6 +1,5 @@
-from botScheduler import start
-from botSession import scheduler
+from botInit import initialize
 
 if __name__ == '__main__':
-    start()
-    scheduler.start()
+    initialize()
+    print('Started.')  # Should not be displayed
