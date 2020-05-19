@@ -1,4 +1,5 @@
 import botCache
+from botInfo import me
 from botMarkov import gen_length
 from botSession import lx, lx_model
 from botDB import images, blacklist
@@ -41,14 +42,24 @@ def process_mention():
         return None
 
 
-def mention(tweet_content):
+def mention(mentioned_tweet):
     keywords = ['say', 'speak', 'generate', '说', '生成', '讲', '言']
-    if tweet_content.author.id in blacklist:
+    delete = ['del', '删']
+    if mentioned_tweet.author.id in blacklist:
         return False
     for item in keywords:
-        if item in tweet_content.text.lower():
+        if item in mentioned_tweet.text.lower():
             sen = gen_length(lx_model, 20, 140)
-            result = lx.update_status(sen, in_reply_to_status_id=tweet_content.id, auto_populate_reply_metadata=True)
+            result = lx.update_status(sen, in_reply_to_status_id=mentioned_tweet.id, auto_populate_reply_metadata=True)
             print(f'Generated: {result.text}\n\n')
             return True
+    for item in delete:
+        if item in mentioned_tweet.text.lower():
+            if mentioned_tweet.in_reply_to_status_id:
+                my_tweet = lx.get_status(mentioned_tweet.in_reply_to_status_id)
+                if my_tweet.author.id == me and my_tweet.in_reply_to_status_id:
+                    source_tweet = lx.get_status(my_tweet.in_reply_to_status_id)
+                    if source_tweet.author.id == mentioned_tweet.author.id:
+                        lx.destroy_status(my_tweet.id)
+                        print(f'Deleted: {my_tweet.id}')
     return None
