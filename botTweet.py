@@ -43,7 +43,7 @@ def process_mention():
 
 
 def mention(mentioned_tweet):
-    keywords = ['say', 'speak', 'generate', '说', '生成', '讲', '言']
+    keywords = ['say', 'speak', 'generate', '说', '生成', '讲', '言', '批', '，骂']
     delete = ['del', '删']
     if mentioned_tweet.author.id in blacklist:
         return False
