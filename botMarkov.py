@@ -1,7 +1,7 @@
 import markovify
 
 
-def gen_model(file='luxun_split.txt'):
+def gen_model(file='split.txt'):
     with open(file, encoding='utf-8') as f:
         model = markovify.Text(f, retain_original=False)
     return model

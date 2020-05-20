@@ -1,3 +1,3 @@
-version = '1.1.1b'
+version = '1.1.2a'
 me = 1246883174946201600
 developer = 3703623798
