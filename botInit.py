@@ -1,6 +1,6 @@
 import botCache
-from botSession import scheduler
-from botScheduler import start_cron
+from botSession import scheduler, logger
+from botRegister import start_cron, handlers
 
 
 def read_mention():
@@ -15,5 +15,6 @@ def initialize():
     except:
         pass
     start_cron()
-    print('Initialized. Starting scheduler...')
+    handlers()
+    logger.info('Initialized. Starting scheduler...')
     scheduler.start()

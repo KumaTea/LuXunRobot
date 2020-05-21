@@ -1,5 +1,7 @@
-from botSession import scheduler
+from botTelegram import *
+from botSession import dp, scheduler
 from botTweet import tweet, morning, night, process_mention
+from telegram.ext import MessageHandler, CommandHandler, Filters
 
 
 def start_cron():
@@ -8,3 +10,9 @@ def start_cron():
     scheduler.add_job(morning, 'cron', hour=7, minute=30)
     scheduler.add_job(night, 'cron', hour=2, minute=30)
     scheduler.add_job(process_mention, 'cron', minute='*')
+
+
+def handlers():
+    dp.add_handler(CommandHandler(['say', 'speak', 'generate'], say))
+    dp.add_handler(CommandHandler(['new', 'ano', 'change'], new))
+    dp.add_handler(CommandHandler(['read', 'origin', 'luxun'], read))

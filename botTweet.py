@@ -1,27 +1,33 @@
 import botCache
-from botInfo import me
+from botInfo import twi_id
 from botMarkov import gen_length
-from botSession import lx, lx_model
 from botDB import images, blacklist
+from botSession import lx_twi, lx_model, logger
 
 
-def tweet():
-    sen = gen_length(lx_model, 100, 140)
-    result = lx.update_status(sen)
-    print(f'Generated: {result.text}\n\n')
+def tweet(desired=None):
+    if desired:
+        sen = desired
+    else:
+        if botCache.sentences:
+            sen = botCache.sentences.pop()
+        else:
+            sen = gen_length(lx_model, 100, 140)
+    result = lx_twi.update_status(sen)
+    logger.info(f'Generated: {result.text}\n\n')
     return True
 
 
 def morning():
-    return lx.update_status('呐，早安。', media_ids=[images['greet']['morning']['id']])
+    return lx_twi.update_status('呐，早安。', media_ids=[images['greet']['morning']['id']])
 
 
 def night():
-    return lx.update_status('呐，晚安。', media_ids=[images['greet']['night']['id']])
+    return lx_twi.update_status('呐，晚安。', media_ids=[images['greet']['night']['id']])
 
 
 def process_mention():
-    tl = lx.mentions_timeline()
+    tl = lx_twi.mentions_timeline()
     task = []
     if botCache.latest_mention:
         for item in tl:
@@ -50,16 +56,16 @@ def mention(mentioned_tweet):
     for item in keywords:
         if item in mentioned_tweet.text.lower():
             sen = gen_length(lx_model, 20, 140)
-            result = lx.update_status(sen, in_reply_to_status_id=mentioned_tweet.id, auto_populate_reply_metadata=True)
-            print(f'Generated: {result.text}\n\n')
+            result = lx_twi.update_status(sen, in_reply_to_status_id=mentioned_tweet.id, auto_populate_reply_metadata=True)
+            logger.info(f'Generated: {result.text}\n\n')
             return True
     for item in delete:
         if item in mentioned_tweet.text.lower():
             if mentioned_tweet.in_reply_to_status_id:
-                my_tweet = lx.get_status(mentioned_tweet.in_reply_to_status_id)
-                if my_tweet.author.id == me and my_tweet.in_reply_to_status_id:
-                    source_tweet = lx.get_status(my_tweet.in_reply_to_status_id)
+                my_tweet = lx_twi.get_status(mentioned_tweet.in_reply_to_status_id)
+                if my_tweet.author.id == twi_id and my_tweet.in_reply_to_status_id:
+                    source_tweet = lx_twi.get_status(my_tweet.in_reply_to_status_id)
                     if source_tweet.author.id == mentioned_tweet.author.id:
-                        lx.destroy_status(my_tweet.id)
-                        print(f'Deleted: {my_tweet.id}')
+                        lx_twi.destroy_status(my_tweet.id)
+                        logger.warn(f'Deleted: {my_tweet.id}')
     return None

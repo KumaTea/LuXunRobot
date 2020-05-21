@@ -1,4 +1,5 @@
-from botInfo import me
+import os
+from botInfo import twi_id
 
 
 images = {
@@ -18,5 +19,9 @@ images = {
     }
 }
 
+blacklist = [twi_id]
 
-blacklist = [me]
+corpus = []
+for i in os.listdir('corpus'):
+    if i.endswith('.txt'):
+        corpus.append(i)

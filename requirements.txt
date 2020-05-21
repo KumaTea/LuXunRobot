@@ -1,4 +1,6 @@
 jieba
+flask
 tweepy
 markovify
 apscheduler
+python-telegram-bot
