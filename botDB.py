@@ -25,3 +25,7 @@ corpus = []
 for i in os.listdir('corpus'):
     if i.endswith('.txt'):
         corpus.append(i)
+
+
+tg_start = '欢迎使用鲁迅 Bot @LuXunRobot 。\n\n' \
+           '您可以使用 /say 生成一句话，或者 /luxun 读取一句原文。'

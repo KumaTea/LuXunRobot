@@ -14,5 +14,7 @@ def start_cron():
 
 def handlers():
     dp.add_handler(CommandHandler(['say', 'speak', 'generate'], say))
+    dp.add_handler(CommandHandler(['read', 'origin', 'luxun'], luxun))
+    dp.add_handler(CommandHandler(['start'], start, filters=Filters.private))
     dp.add_handler(CommandHandler(['new', 'ano', 'change'], new))
-    dp.add_handler(CommandHandler(['read', 'origin', 'luxun'], read))
+    dp.add_handler(MessageHandler((~ Filters.command), say))

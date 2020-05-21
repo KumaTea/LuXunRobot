@@ -1,6 +1,7 @@
 import botCache
 from botRead import read
 from botInfo import tg_id
+from botDB import tg_start
 from botMarkov import gen_length
 from botSession import lx_tg, lx_model
 
@@ -12,6 +13,11 @@ def can_delete(chat_id):
         delete_status = lx_tg.get_chat_member(chat_id, tg_id).can_delete_messages
         botCache.delete_privilege[chat_id] = delete_status
         return delete_status
+
+
+def start(update, context):
+    message = update.message
+    return message.reply_text(tg_start)
 
 
 def say(update, context):
