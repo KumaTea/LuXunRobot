@@ -13,6 +13,13 @@ for file in corpus_file:
     with open(file, 'r', encoding='utf-8') as f:
         raw += f.read()
 
+for i in ['。', '？', '！', '；']:
+    raw = raw.replace(i, f'{i}\n')
+
+while '\n”' in raw:
+    raw = raw.replace('\n”', '”')
+raw = raw.replace('\n\n', '\n')
+
 split = ''
 for i in raw.splitlines():
     split += " ".join(jieba.cut(i)) + '\n'
