@@ -9,7 +9,7 @@ def start_cron():
     # scheduler.add_job(tweet, 'cron', hour=2, minute=0)
     scheduler.add_job(morning, 'cron', hour=7, minute=30)
     scheduler.add_job(night, 'cron', hour=2, minute=30)
-    scheduler.add_job(process_mention, 'cron', minute='*/15')
+    scheduler.add_job(process_mention, 'cron', minute='*/20')
 
 
 def handlers():
@@ -17,4 +17,4 @@ def handlers():
     dp.add_handler(CommandHandler(['read', 'origin', 'luxun'], luxun))
     dp.add_handler(CommandHandler(['start'], start, filters=Filters.private))
     dp.add_handler(CommandHandler(['new', 'ano', 'change'], new))
-    dp.add_handler(MessageHandler((~ Filters.command), say))
+    # dp.add_handler(MessageHandler((~ Filters.command), say))
