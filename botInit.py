@@ -1,4 +1,5 @@
 import botCache
+from botTools import mkdir
 from botSession import scheduler, logger
 from botRegister import start_cron, handlers
 
@@ -14,6 +15,7 @@ def initialize():
         read_mention()
     except:
         pass
+    mkdir('tmp')
     start_cron()
     handlers()
     logger.info('Initialized. Starting scheduler...')

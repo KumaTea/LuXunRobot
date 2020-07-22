@@ -2,6 +2,7 @@ import botCache
 from botInfo import twi_id
 from botMarkov import gen_length
 from botDB import images, blacklist
+from botWallpaper import send_wallpaper
 from botSession import lx_twi, lx_model, logger
 
 
@@ -19,10 +20,12 @@ def tweet(desired=None):
 
 
 def morning():
-    return lx_twi.update_status('呐，早安。', media_ids=[images['greet']['morning']['id']])
+    logger.info(f'Sending morning greeting...')
+    return send_wallpaper()
 
 
 def night():
+    logger.info(f'Sending night greeting...')
     return lx_twi.update_status('呐，晚安。', media_ids=[images['greet']['night']['id']])
 
 
