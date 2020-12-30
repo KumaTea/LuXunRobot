@@ -9,7 +9,7 @@ def start_cron():
     # scheduler.add_job(tweet, 'cron', hour=2, minute=0)
     scheduler.add_job(morning, 'cron', hour=7, minute=30)
     scheduler.add_job(night, 'cron', hour=2, minute=30)
-    scheduler.add_job(process_mention, 'cron', minute='*/20')
+    # scheduler.add_job(process_mention, 'cron', hour='*')
 
 
 def handlers():

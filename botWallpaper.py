@@ -1,6 +1,6 @@
 import json
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from botSession import lx_twi, logger
 
 
@@ -19,7 +19,7 @@ def get_wallpaper(locale=market):
 
 def send_wallpaper(comment='呐，早安。'):
     wp_url, wp_copyright = get_wallpaper()
-    wp_path = 'tmp/' + datetime.now().strftime('%Y%m%d') + '.jpg'
+    wp_path = 'tmp/' + datetime.now(timezone(timedelta(hours=8))).strftime('%Y%m%d%H%M%S') + '.jpg'
     with open(wp_path, 'wb') as f:
         f.write(requests.get(wp_url).content)
     wp_id = lx_twi.media_upload(wp_path)
