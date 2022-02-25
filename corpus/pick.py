@@ -1,8 +1,9 @@
 import os
 import json
+from localRules import escape_word
 
-
-config_file = 'corpus.json'
+train_file = 'train.json'
+min_length = 20
 
 
 def get_articles():
@@ -15,25 +16,26 @@ def get_articles():
 
 
 def pick_articles():
-    config = []
+    train_data = []
     articles = get_articles()
     for book in articles:
+        book_content = ''
         for article in book:
-            with open(article, 'r', encoding='utf-8') as f:
+            with open(article, 'r', encoding='utf-8', errors='ignore') as f:
                 text = f.read()
-            print(os.path.basename(article))
-            print(text)
-            print(f'\n\n\n\n{os.path.basename(article)}\n')
-            decision = input('Accept? [Y/n]') or 'Y'
+            lines = text.splitlines()
+            if '年' in lines[-1] and '月' in lines[-1]:
+                lines = lines[:-1]
+            text = ''
+            for line in lines:
+                if len(line) > min_length and escape_word not in line:
+                    text += line + '\n'
+            book_content += text
+        if bc := book_content[:-1]:
+            train_data.append(bc)
 
-            config.append({
-                'path': article,
-                'pick': decision.upper() != 'N'
-            })
-
-    with open(config_file, 'w', encoding='utf-8') as f:
-        json.dump(config, f)
-
+    with open(train_file, 'w', encoding='utf-8') as f:
+        json.dump(train_data, f)
     return True
 
 

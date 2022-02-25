@@ -4,3 +4,4 @@ token*
 *.log
 .vs
 *.tmp
+local*
